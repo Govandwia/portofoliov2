@@ -19,6 +19,8 @@ export function Navbar() {
 
   const { scrollY } = useScroll();
 
+  const isExperiencePage = pathname === '/experience';
+
   // Scroll-linked transformations (0px to 100px scroll)
   const navWidth = useTransform(scrollY, (y) => {
     const p = Math.min(Math.max(y / 100, 0), 1);
@@ -55,12 +57,12 @@ export function Navbar() {
 
   const navBackgroundColor = useTransform(scrollY, (y) => {
     const p = Math.min(Math.max(y / 100, 0), 1);
-    return `rgba(255, 255, 255, ${0.8 * p})`;
+    return isExperiencePage ? `rgba(24, 24, 27, ${0.8 * p})` : `rgba(255, 255, 255, ${0.8 * p})`;
   });
 
   const navBorderColor = useTransform(scrollY, (y) => {
     const p = Math.min(Math.max(y / 100, 0), 1);
-    return `rgba(228, 228, 231, ${1 * p})`;
+    return isExperiencePage ? `rgba(82, 82, 91, ${1 * p})` : `rgba(228, 228, 231, ${1 * p})`;
   });
 
   const navBoxShadow = useTransform(scrollY, (y) => {
@@ -73,7 +75,7 @@ export function Navbar() {
     return `${6 + (9993 * p)}px`;
   });
 
-  const navLinksColor = useTransform(scrollY, [0, 100], ["#52525b", "#a1a1aa"]);
+  const navLinksColor = useTransform(scrollY, [0, 100], isExperiencePage ? ["#e4e4e7", "#a1a1aa"] : ["#52525b", "#a1a1aa"]);
 
   const navItems = [
     { label: 'about', href: '/#about' },
@@ -105,11 +107,11 @@ export function Navbar() {
             <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
               <motion.div 
                 style={{ borderRadius: logoRadius }}
-                className="w-10 h-10 bg-black flex items-center justify-center text-white font-bold text-xs"
+                className={`w-10 h-10 flex items-center justify-center font-bold text-xs ${isExperiencePage ? 'bg-white text-black' : 'bg-black text-white'}`}
               >
                 GDA
               </motion.div>
-              <span className="font-bold text-sm tracking-widest uppercase text-zinc-800 hidden md:block">
+              <span className={`font-bold text-sm tracking-widest uppercase hidden md:block ${isExperiencePage ? 'text-white' : 'text-zinc-800'}`}>
                 GOVAN
               </span>
             </Link>
@@ -126,7 +128,7 @@ export function Navbar() {
                 <Link 
                   key={item.label} 
                   href={item.href} 
-                  className={`transition-colors hover:text-black ${isActive ? 'text-black' : ''}`}
+                  className={`transition-colors hover:text-current ${isActive ? (isExperiencePage ? 'text-white' : 'text-black') : ''}`}
                 >
                   {item.label}
                 </Link>
@@ -135,7 +137,7 @@ export function Navbar() {
           </motion.nav>
 
           <div className="flex items-center gap-4">
-            <a href="/contact" className={`border-2 border-black rounded-full px-4 py-2 md:px-6 text-xs md:text-sm font-bold uppercase hover:bg-black hover:text-white transition-colors`}>
+            <a href="/contact" className={`border-2 rounded-full px-4 py-2 md:px-6 text-xs md:text-sm font-bold uppercase transition-colors ${isExperiencePage ? 'border-white text-white hover:bg-white hover:text-black' : 'border-black text-black hover:bg-black hover:text-white'}`}>
               CONTACT
             </a>
             
@@ -144,9 +146,9 @@ export function Navbar() {
               className="lg:hidden flex flex-col gap-1.5 p-2 z-[110]"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <div className={`w-6 h-0.5 bg-black transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <div className={`w-6 h-0.5 bg-black transition-all ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
-              <div className={`w-6 h-0.5 bg-black transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <div className={`w-6 h-0.5 transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''} ${isExperiencePage && !isMobileMenuOpen ? 'bg-white' : 'bg-black'}`} />
+              <div className={`w-6 h-0.5 transition-all ${isMobileMenuOpen ? 'opacity-0' : ''} ${isExperiencePage && !isMobileMenuOpen ? 'bg-white' : 'bg-black'}`} />
+              <div className={`w-6 h-0.5 transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''} ${isExperiencePage && !isMobileMenuOpen ? 'bg-white' : 'bg-black'}`} />
             </button>
           </div>
         </motion.header>

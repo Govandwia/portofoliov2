@@ -19,7 +19,7 @@ export function SelectedWorks() {
       {works.map((work, index) => (
         <div 
           key={work.id}
-          className="group relative flex flex-col md:flex-row justify-between items-center py-10 md:py-16 border-b border-zinc-200 border-dashed cursor-pointer"
+          className="group relative flex flex-col md:flex-row justify-between items-center py-4 md:py-6 border-b border-zinc-200 border-dashed cursor-pointer"
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >

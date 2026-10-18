@@ -179,84 +179,147 @@ const fullExperience = [
 
 export default function ExperiencePage() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white pt-40 pb-20 px-4 md:px-10 selection:bg-white selection:text-black">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-zinc-950 text-white pt-28 md:pt-32 pb-16 px-4 md:px-8 selection:bg-white selection:text-black">
+      <div className="max-w-5xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-6 mb-24"
+          className="flex flex-col gap-4 mb-12 md:mb-16 text-center items-center"
         >
-          <h1 className="text-6xl md:text-[8vw] font-black font-heading leading-[0.8] tracking-tighter uppercase">
+          <h1 className="text-5xl md:text-7xl font-black font-heading leading-tight tracking-tighter uppercase">
             Experience
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl font-bold">
+          <p className="text-base md:text-lg text-zinc-400 max-w-2xl font-medium">
             A detailed timeline of my professional journey, leadership roles, and technical contributions over the years.
           </p>
         </motion.div>
 
-        <div className="relative border-l border-white/20 pl-6 md:pl-12 py-4 flex flex-col gap-20">
-          {fullExperience.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="relative group"
-            >
-              {/* Timeline Dot */}
-              <div className="absolute -left-[31px] md:-left-[55px] top-2 w-4 h-4 rounded-full bg-zinc-950 border-2 border-white group-hover:bg-white transition-colors duration-300 shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
-              
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
-                  <span className="text-sm font-bold tracking-widest text-zinc-500 uppercase">
-                    {exp.period}
-                  </span>
-                  <span className="hidden md:block w-8 h-[1px] bg-white/20" />
-                  <span className="text-sm font-bold tracking-widest text-zinc-400 uppercase">
-                    {exp.location}
-                  </span>
-                </div>
+        {/* Alternating Timeline with Center Line */}
+        <div className="relative">
+          {/* Vertical Line: on left for mobile, centered on desktop */}
+          <div className="absolute left-4 md:left-1/2 top-2 bottom-2 w-[1px] bg-white/20 -translate-x-1/2" />
 
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-4xl md:text-5xl font-black tracking-tight text-white group-hover:text-zinc-300 transition-colors">
-                    {exp.title}
-                  </h3>
-                  <h4 className="text-2xl font-bold text-zinc-500">
-                    {exp.company}
-                  </h4>
-                </div>
+          <div className="flex flex-col gap-8 md:gap-10">
+            {fullExperience.map((exp, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: 0.05 }}
+                  className="relative flex flex-col md:flex-row items-start"
+                >
+                  {/* Left Column (Desktop) */}
+                  {isEven ? (
+                    <div className="w-full md:w-1/2 pl-10 md:pl-0 md:pr-12 md:text-right">
+                      <div className="flex flex-col gap-2 group md:items-end">
+                        {/* Period & Location */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs font-bold tracking-widest uppercase md:justify-end text-zinc-500">
+                          <span className="text-zinc-400">{exp.period}</span>
+                          <span className="w-1 h-1 rounded-full bg-zinc-600" />
+                          <span className="text-zinc-500">{exp.location}</span>
+                        </div>
 
-                <p className="text-lg text-zinc-400 mt-4 leading-relaxed max-w-3xl">
-                  {exp.description}
-                </p>
+                        {/* Title & Company */}
+                        <div>
+                          <h3 className="text-2xl md:text-3xl font-black font-heading tracking-tight text-white group-hover:text-zinc-300 transition-colors leading-tight">
+                            {exp.title}
+                          </h3>
+                          <h4 className="text-base md:text-lg font-bold text-zinc-400 mt-0.5">
+                            {exp.company}
+                          </h4>
+                        </div>
 
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {exp.skills.map(skill => (
-                    <span 
-                      key={skill}
-                      className="px-4 py-2 rounded-full border border-white/20 text-xs font-bold tracking-widest uppercase text-zinc-300 hover:bg-white hover:text-black transition-colors cursor-default"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                        {/* Description */}
+                        <p className="text-sm text-zinc-400 leading-relaxed max-w-md mt-1">
+                          {exp.description}
+                        </p>
+
+                        {/* Skills */}
+                        <div className="flex flex-wrap gap-1.5 mt-2 md:justify-end">
+                          {exp.skills.map(skill => (
+                            <span 
+                              key={skill}
+                              className="px-3 py-1 rounded-full border border-white/15 text-[11px] font-bold tracking-wider uppercase text-zinc-300 bg-white/5 hover:bg-white hover:text-black transition-colors cursor-default"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="hidden md:block w-1/2" />
+                  )}
+
+                  {/* Center Node / Dot */}
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-2 z-10">
+                    <div className="w-3.5 h-3.5 rounded-full bg-zinc-950 border-2 border-white shadow-[0_0_12px_rgba(255,255,255,0.7)] group-hover:scale-125 transition-transform" />
+                  </div>
+
+                  {/* Right Column (Desktop) */}
+                  {!isEven ? (
+                    <div className="w-full md:w-1/2 pl-10 md:pl-12 md:text-left">
+                      <div className="flex flex-col gap-2 group md:items-start">
+                        {/* Period & Location */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs font-bold tracking-widest uppercase text-zinc-500">
+                          <span className="text-zinc-400">{exp.period}</span>
+                          <span className="w-1 h-1 rounded-full bg-zinc-600" />
+                          <span className="text-zinc-500">{exp.location}</span>
+                        </div>
+
+                        {/* Title & Company */}
+                        <div>
+                          <h3 className="text-2xl md:text-3xl font-black font-heading tracking-tight text-white group-hover:text-zinc-300 transition-colors leading-tight">
+                            {exp.title}
+                          </h3>
+                          <h4 className="text-base md:text-lg font-bold text-zinc-400 mt-0.5">
+                            {exp.company}
+                          </h4>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-sm text-zinc-400 leading-relaxed max-w-md mt-1">
+                          {exp.description}
+                        </p>
+
+                        {/* Skills */}
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {exp.skills.map(skill => (
+                            <span 
+                              key={skill}
+                              className="px-3 py-1 rounded-full border border-white/15 text-[11px] font-bold tracking-wider uppercase text-zinc-300 bg-white/5 hover:bg-white hover:text-black transition-colors cursor-default"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="hidden md:block w-1/2" />
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
         
         {/* Bottom Resume CTA */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-32 pt-16 border-t border-white/20 flex flex-col md:flex-row items-center justify-between gap-8"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 pt-10 border-t border-white/20 flex flex-col md:flex-row items-center justify-between gap-6"
         >
-          <h3 className="text-3xl font-black tracking-tight">Want the full picture?</h3>
-          <button className="group relative inline-flex items-center gap-4 bg-white text-zinc-950 px-8 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-zinc-200 transition-colors">
+          <h3 className="text-2xl font-black tracking-tight">Want the full picture?</h3>
+          <button className="group relative inline-flex items-center gap-3 bg-white text-zinc-950 px-6 py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-zinc-200 transition-colors">
             <span>Download Resume</span>
-            <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+            <div className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
               <ArrowUpRight className="w-4 h-4" />
             </div>
           </button>

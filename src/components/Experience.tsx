@@ -61,7 +61,7 @@ export function Experience() {
       {experiences.map((exp) => (
         <div 
           key={exp.id}
-          className="group relative border-b border-white/20 py-10 md:py-16 flex flex-col md:flex-row justify-between items-start md:items-center cursor-pointer hover:bg-white/5 transition-colors duration-500 px-4 md:px-10 -mx-4 md:-mx-10"
+          className="group relative border-b border-white/20 py-5 md:py-8 flex flex-col md:flex-row justify-between items-start md:items-center cursor-pointer hover:bg-white/5 transition-colors duration-500 px-4 md:px-10 -mx-4 md:-mx-10"
           onMouseEnter={() => setHoveredId(exp.id)}
           onMouseLeave={() => setHoveredId(null)}
         >

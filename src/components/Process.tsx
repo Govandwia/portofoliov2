@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { StickySection } from "@/components/StickySection";
 
 const processData = {
   DEFINE: {
@@ -27,7 +28,7 @@ export function Process() {
   const [activeTab, setActiveTab] = useState<"DEFINE" | "DEVELOP" | "DELIVER">("DEVELOP");
 
   return (
-    <section id="process" className="relative z-[50] py-32 px-10 bg-[#F0F0F0] flex flex-col md:flex-row gap-20 overflow-hidden rounded-t-[3rem] -mt-10 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
+    <StickySection id="process" zIndex={50} className="min-h-screen py-20 md:py-28 px-6 md:px-12 bg-[#F0F0F0] flex flex-col md:flex-row gap-12 md:gap-20 items-center justify-center overflow-hidden rounded-t-[3rem] -mt-10 shadow-[0_-25px_60px_rgba(0,0,0,0.15)]">
       <motion.div 
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -88,6 +89,6 @@ export function Process() {
           </AnimatePresence>
         </div>
       </motion.div>
-    </section>
+    </StickySection>
   );
 }
