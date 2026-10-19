@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, Phone, Send } from "lucide-react";
 import dynamic from "next/dynamic";
 
-// Dynamically import WebGL component (no SSR - needs browser APIs)
+// WebGL needs browser APIs, so no SSR
 const WebGLTunnel = dynamic(() => import("@/components/WebGLTunnel"), {
   ssr: false,
 });
 
 export default function ContactPage() {
   const [showOpening, setShowOpening] = useState(true);
+  const [revealed, setRevealed] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,18 +35,14 @@ export default function ContactPage() {
 
   return (
     <>
-      <AnimatePresence>
-        {showOpening && (
-          <motion.div
-            key="tunnel"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <WebGLTunnel onComplete={() => setShowOpening(false)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showOpening && (
+        <WebGLTunnel
+          onReveal={() => setRevealed(true)}
+          onComplete={() => setShowOpening(false)}
+        />
+      )}
 
+      {revealed && (
       <main className="min-h-screen w-full bg-zinc-200 flex flex-col lg:flex-row overflow-hidden pt-20 lg:pt-0">
       
       {/* Left Side - The Bold Statement */}
@@ -174,6 +171,7 @@ export default function ContactPage() {
       </motion.div>
 
     </main>
+      )}
     </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
@@ -177,10 +178,21 @@ const fullExperience = [
   }
 ];
 
+const ExperienceArchitectureHero = dynamic(
+  () => import("@/components/ExperienceArchitectureHero"),
+  { ssr: false }
+);
+
 export default function ExperiencePage() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white pt-28 md:pt-32 pb-16 px-4 md:px-8 selection:bg-white selection:text-black">
-      <div className="max-w-5xl mx-auto">
+    <div className="bg-zinc-950 text-white min-h-screen selection:bg-white selection:text-black">
+      {/* 3D Typographic Architectural Hero */}
+      <ExperienceArchitectureHero />
+
+      <main 
+        id="experience-timeline" 
+        className="pt-20 md:pt-28 pb-16 px-4 md:px-8 max-w-5xl mx-auto"
+      >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -324,8 +336,7 @@ export default function ExperiencePage() {
             </div>
           </button>
         </motion.div>
-
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

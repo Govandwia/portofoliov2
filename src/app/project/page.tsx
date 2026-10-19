@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, ExternalLink, Calendar, ShieldCheck, Search } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const TypeWallHero = dynamic(() => import("@/components/TypeWallHero"), {
+  ssr: false,
+});
 
 interface Project {
   id: number;
@@ -233,7 +238,11 @@ export default function ProjectPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#F4F4F6] text-zinc-950 pt-20 pb-0 overflow-x-hidden relative flex flex-col">
+    <div className="bg-[#F4F4F6] text-zinc-950 overflow-x-clip relative flex flex-col">
+      {/* 3D Typographic Folding Wall Hero (ported from 333southwabash.com/the-red) */}
+      <TypeWallHero />
+
+      <main id="project-list" className="min-h-screen bg-[#F4F4F6] text-zinc-950 pt-16 pb-0 overflow-x-clip relative z-20 shadow-[0_-25px_50px_-12px_rgba(0,0,0,0.06)] border-t border-zinc-300/80 flex flex-col">
       
       {/* Background Architectural Grid Pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#000000_1px,transparent_1px)] bg-[size:24px_24px]" />
@@ -553,5 +562,6 @@ export default function ProjectPage() {
 
 
     </main>
+    </div>
   );
 }

@@ -78,10 +78,8 @@ export function Navbar() {
   const navLinksColor = useTransform(scrollY, [0, 100], isExperiencePage ? ["#e4e4e7", "#a1a1aa"] : ["#52525b", "#a1a1aa"]);
 
   const navItems = [
-    { label: 'about', href: '/#about' },
-    { label: 'work', href: '/project' },
-    { label: 'experience', href: '/experience' },
-    { label: 'skills', href: '/#skills' }
+    { label: 'project', href: '/project' },
+    { label: 'experience', href: '/experience' }
   ];
 
   return (
